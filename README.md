@@ -50,10 +50,10 @@ composer require chargily/chargily-pay
 
 # Documentation
 
--   [Balance](./blob/main/docs/Balance.md)
--   [Checkouts](./blob/main/docs/Checkouts.md)
--   [Customers](./blob/main/docs/Customers.md)
--   [Payment Links](./blob/main/docs/PaymentLinks.md)
--   [Prices](./blob/main/docs/Prices.md)
--   [Products](./blob/main/docs/Products.md)
--   [Webhook](./blob/main/docs/Webhook.md)
+-   [Balance](https://github.com/Chargily/chargily-pay-php/blob/main/docs/Balance.md)
+-   [Checkouts](https://github.com/Chargily/chargily-pay-php/blob/main/docs/Checkouts.md)
+-   [Customers](https://github.com/Chargily/chargily-pay-php/blob/main/docs/Customers.md)
+-   [Payment Links](https://github.com/Chargily/chargily-pay-php/blob/main/docs/PaymentLinks.md)
+-   [Prices](https://github.com/Chargily/chargily-pay-php/blob/main/docs/Prices.md)
+-   [Products](https://github.com/Chargily/chargily-pay-php/blob/main/docs/Products.md)
+-   [Webhook](https://github.com/Chargily/chargily-pay-php/blob/main/docs/Webhook.md)
