@@ -1,0 +1,42 @@
+{
+    "name": "chargily/chargily-pay",
+    "type": "library",
+    "description": "PHP Library for Chargily Pay V2",
+    "keywords": [
+        "Chargily-Pay-Gateway",
+        "Pay",
+        "epaiment",
+        "pay.chargily.com",
+        "chargily",
+        "satim",
+        "cib",
+        "cibweb",
+        "php"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "ChargilyDev",
+            "role": "Developer"
+        },
+        {
+            "name": "Boubazine mohammed",
+            "email": "mohamedtorino161@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=8.1.10",
+        "guzzlehttp/guzzle": "^7.0",
+        "symfony/var-dumper": "^6.4",
+        "rakit/validation": "^1.4",
+        "illuminate/support": "^10.39",
+        "medboubazine/number_format": "^1.1",
+        "nesbot/carbon": "^2.72"
+    },
+    "autoload": {
+        "psr-4": {
+            "Chargily\\ChargilyPay\\": "src/"
+        }
+    }
+}
