@@ -34,9 +34,17 @@
         "medboubazine/number_format": "^1.1",
         "nesbot/carbon": "^2.72"
     },
+    "require-dev": {
+        "phpunit/phpunit": "^10.5"
+    },
     "autoload": {
         "psr-4": {
             "Chargily\\ChargilyPay\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ChargilyTests\\ChargilyPay\\": "tests/"
         }
     }
 }

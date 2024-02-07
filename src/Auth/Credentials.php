@@ -4,7 +4,6 @@ namespace Chargily\ChargilyPay\Auth;
 
 use Chargily\ChargilyPay\Exceptions\ValidationException;
 use Chargily\ChargilyPay\Validation\Auth\CredentialsValidation;
-use Rakit\Validation\Validator;
 
 final class Credentials
 {
