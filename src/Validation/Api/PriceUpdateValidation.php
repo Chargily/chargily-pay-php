@@ -9,16 +9,14 @@ final class PriceUpdateValidation extends Validation implements ValidationInterf
 {
     /**
      * Rules
-     *
-     * @return array
      */
     public function rules(): array
     {
         return [
-            "product_id" => "nullable|min:1",
-            "amount" => "nullable|numeric",
-            "currency" => "nullable|min:3|max:3",
-            "metadata" => "nullable|array",
+            'product_id' => 'nullable|min:1',
+            'amount' => 'nullable|numeric',
+            'currency' => 'nullable|min:3|max:3',
+            'metadata' => 'nullable|array',
         ];
     }
 }

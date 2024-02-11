@@ -19,7 +19,5 @@ final class ValidationException extends Exception
         }
 
         throw new self($message, $code);
-
-        return;
     }
 }

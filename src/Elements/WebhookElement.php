@@ -12,7 +12,6 @@ use Chargily\ChargilyPay\Core\Interfaces\ElementsInterface;
  * @method \Chargily\ChargilyPay\Elements\WebhookElement getCreatedAt()
  * @method \Chargily\ChargilyPay\Elements\WebhookElement getUpdatedAt()
  */
-
 class WebhookElement extends ElementsAbstract implements ElementsInterface
 {
 }

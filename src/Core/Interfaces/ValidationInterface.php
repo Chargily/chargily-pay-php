@@ -2,21 +2,18 @@
 
 namespace Chargily\ChargilyPay\Core\Interfaces;
 
-
 interface ValidationInterface
 {
     /**
      * Rules
-     *
-     * @return array
      */
     public function rules(): array;
+
     /**
      * Errors
-     *
-     * @return array
      */
     public function errors(): array;
+
     /**
      * Errors
      *

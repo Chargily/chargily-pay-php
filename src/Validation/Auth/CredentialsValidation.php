@@ -9,15 +9,13 @@ final class CredentialsValidation extends Validation implements ValidationInterf
 {
     /**
      * Rules
-     *
-     * @return array
      */
     public function rules(): array
     {
         return [
-            "mode" => "required|in:test,live",
-            "public" => "required|min:16",
-            "secret" => "required|min:16",
+            'mode' => 'required|in:test,live',
+            'public' => 'required|min:16',
+            'secret' => 'required|min:16',
         ];
     }
 }

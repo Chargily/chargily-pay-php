@@ -9,20 +9,18 @@ final class CustomerCreateValidation extends Validation implements ValidationInt
 {
     /**
      * Rules
-     *
-     * @return array
      */
     public function rules(): array
     {
         return [
-            "name" => "required|min:1",
-            "email" => "required|email",
-            "phone" => "required|numeric",
-            "address" => "required|array",
-            "address.country" => "required|min:2|max:2",
-            "address.state" => "required|min:2",
-            "address.address" => "required|min:2",
-            "metadata" => "nullable|array",
+            'name' => 'required|min:1',
+            'email' => 'required|email',
+            'phone' => 'required|numeric',
+            'address' => 'required|array',
+            'address.country' => 'required|min:2|max:2',
+            'address.state' => 'required|min:2',
+            'address.address' => 'required|min:2',
+            'metadata' => 'nullable|array',
         ];
     }
 }

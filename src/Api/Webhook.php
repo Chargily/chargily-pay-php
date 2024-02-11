@@ -12,15 +12,14 @@ use Chargily\ChargilyPay\Elements\WebhookElement;
 final class Webhook extends ApiClassesAbstract implements ApiClassesInterface
 {
     use GuzzleHttpTrait;
+
     /**
      * get webhook data
-     *
-     * @return WebhookElement|null
      */
     public function get(): ?WebhookElement
     {
         $headers = getallheaders();
-        $signature = isset($headers['signature']) ? $headers['signature'] : "";
+        $signature = isset($headers['signature']) ? $headers['signature'] : '';
         $payload = file_get_contents('php://input');
         $computed = hash_hmac('sha256', $payload, $this->credentials->secret);
 
@@ -29,21 +28,23 @@ final class Webhook extends ApiClassesAbstract implements ApiClassesInterface
 
             return $this->newElement($event);
         }
+
         return null;
     }
+
     /**
      * Create new Element
      *
-     * @param array $data
-     * @return WebhookElement
+     * @param  array  $data
      */
     public function newElement(array $event): WebhookElement
     {
         $event_type = $event['type'];
         $data = null;
-        if (Str::startsWith($event_type, "checkout.")) {
+        if (Str::startsWith($event_type, 'checkout.')) {
             $data = (new Checkouts($this->credentials))->newElement($event['data']);
         }
+
         return (new WebhookElement())
             ->setId($event['id'])
             ->setType($event['type'])

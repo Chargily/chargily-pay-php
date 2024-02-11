@@ -9,20 +9,18 @@ final class CustomerUpdateValidation extends Validation implements ValidationInt
 {
     /**
      * Rules
-     *
-     * @return array
      */
     public function rules(): array
     {
         return [
-            "name" => "nullable|min:1",
-            "email" => "nullable|email",
-            "phone" => "nullable|numeric",
-            "address" => "nullable|array",
-            "address.country" => "nullable|min:2|max:2",
-            "address.state" => "nullable|min:2",
-            "address.address" => "nullable|min:2",
-            "metadata" => "nullable|array",
+            'name' => 'nullable|min:1',
+            'email' => 'nullable|email',
+            'phone' => 'nullable|numeric',
+            'address' => 'nullable|array',
+            'address.country' => 'nullable|min:2|max:2',
+            'address.state' => 'nullable|min:2',
+            'address.address' => 'nullable|min:2',
+            'metadata' => 'nullable|array',
         ];
     }
 }

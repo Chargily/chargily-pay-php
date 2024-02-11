@@ -13,19 +13,18 @@ use Chargily\ChargilyPay\Exceptions\InvalidHttpResponse;
 final class Balance extends ApiClassesAbstract implements ApiClassesInterface
 {
     use GuzzleHttpTrait;
+
     /**
      * get balance
-     *
-     * @return Collection
      */
     public function get(): ?Collection
     {
         $headers = [
-            "Authorization" => "Bearer {$this->credentials->getAuthorizationToken()}",
+            'Authorization' => "Bearer {$this->credentials->getAuthorizationToken()}",
         ];
         $options = [];
 
-        $response = $this->__request($this->credentials->test_mode, "GET", "balance", $headers, $options);
+        $response = $this->__request($this->credentials->test_mode, 'GET', 'balance', $headers, $options);
 
         $status_code = $response->getStatusCode();
         $content = $response->getBody()->getContents();
@@ -36,6 +35,7 @@ final class Balance extends ApiClassesAbstract implements ApiClassesInterface
             foreach ($content_array['wallets'] as $key => $value) {
                 $collection->push($this->newElement($value));
             }
+
             return $collection;
         }
 
@@ -43,11 +43,9 @@ final class Balance extends ApiClassesAbstract implements ApiClassesInterface
 
         return null;
     }
+
     /**
      * Create new Element
-     *
-     * @param array $data
-     * @return WalletElement
      */
     public function newElement(array $data): WalletElement
     {

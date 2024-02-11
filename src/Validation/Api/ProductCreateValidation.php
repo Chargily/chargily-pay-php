@@ -9,16 +9,14 @@ final class ProductCreateValidation extends Validation implements ValidationInte
 {
     /**
      * Rules
-     *
-     * @return array
      */
     public function rules(): array
     {
         return [
-            "name" => "required|min:1",
-            "description" => "nullable|min:1",
-            "images" => "nullable|array",
-            "metadata" => "nullable|array",
+            'name' => 'required|min:1',
+            'description' => 'nullable|min:1',
+            'images' => 'nullable|array',
+            'metadata' => 'nullable|array',
         ];
     }
 }

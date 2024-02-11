@@ -9,16 +9,14 @@ final class PriceCreateValidation extends Validation implements ValidationInterf
 {
     /**
      * Rules
-     *
-     * @return array
      */
     public function rules(): array
     {
         return [
-            "product_id" => "required|min:1",
-            "amount" => "required|numeric",
-            "currency" => "required|min:3|max:3",
-            "metadata" => "nullable|array",
+            'product_id' => 'required|min:1',
+            'amount' => 'required|numeric',
+            'currency' => 'required|min:3|max:3',
+            'metadata' => 'nullable|array',
         ];
     }
 }

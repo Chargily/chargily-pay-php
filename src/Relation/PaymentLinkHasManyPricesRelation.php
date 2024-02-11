@@ -10,8 +10,6 @@ final class PaymentLinkHasManyPricesRelation extends RelationAbstract implements
 {
     /**
      * Get All Prices
-     *
-     * @return PaginationElement
      */
     public function all($per_page = 10, $page = 1): ?PaginationElement
     {

@@ -2,9 +2,9 @@
 
 namespace Chargily\ChargilyPay\Elements;
 
-use Chargily\ChargilyPay\Core\Interfaces\ElementsInterface;
 use Chargily\ChargilyPay\Core\Abstracts\ElementsAbstract;
 use Chargily\ChargilyPay\Core\Helpers\Collection;
+use Chargily\ChargilyPay\Core\Interfaces\ElementsInterface;
 
 /**
  * @method \Chargily\ChargilyPay\Elements\PaginationElement getCurrentPage()
@@ -18,17 +18,14 @@ class PaginationElement extends ElementsAbstract implements ElementsInterface
 {
     /**
      * Constructor
-     *
-     * @param array $configs
-     * @param array|Collection $data
      */
     public function __construct(array $configs, array|Collection $data)
     {
-        $this->setCurrentPage($configs["current_page"]);
+        $this->setCurrentPage($configs['current_page']);
         $this->setFirstPage(1);
-        $this->setLastPage($configs["last_page"]);
-        $this->setPerPage($configs["per_page"]);
-        $this->setTotal($configs["total"]);
+        $this->setLastPage($configs['last_page']);
+        $this->setPerPage($configs['per_page']);
+        $this->setTotal($configs['total']);
         $this->setData($data);
     }
 }

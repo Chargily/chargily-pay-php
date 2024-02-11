@@ -14,7 +14,6 @@ use Chargily\ChargilyPay\Core\Interfaces\ElementsInterface;
  * @method \Chargily\ChargilyPay\Elements\PriceElement getCreatedAt()
  * @method \Chargily\ChargilyPay\Elements\PriceElement getUpdatedAt()
  */
-
 class PriceElement extends ElementsAbstract implements ElementsInterface
 {
 }

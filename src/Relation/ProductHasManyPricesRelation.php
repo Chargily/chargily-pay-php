@@ -11,18 +11,14 @@ final class ProductHasManyPricesRelation extends RelationAbstract implements Rel
 {
     /**
      * Create new API
-     *
-     * @param array $data
-     * @return 
      */
     public function create(array $data): ?PriceElement
     {
-        return $this->foreign->create([...$data, ...["product_id" => $this->attributes['id']]]);
+        return $this->foreign->create([...$data, ...['product_id' => $this->attributes['id']]]);
     }
+
     /**
      * Get Prices
-     *
-     * @return PaginationElement
      */
     public function get($per_page = 10, $page = 1): ?PaginationElement
     {

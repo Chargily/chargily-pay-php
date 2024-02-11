@@ -18,25 +18,26 @@ use Chargily\ChargilyPay\Validation\Api\PaymentLinkUpdateValidation;
 final class PaymentLinks extends ApiClassesAbstract implements ApiClassesInterface
 {
     use GuzzleHttpTrait;
+
     /**
      * Get all items
      *
-     * @param integer $per_page
-     * @param integer $page
+     * @param  int  $per_page
+     * @param  int  $page
      * @return Collection
      */
     public function all($per_page = 10, $page = 1): ?PaginationElement
     {
         $query = http_build_query([
-            "per_page" => $per_page,
-            "page" => $page,
+            'per_page' => $per_page,
+            'page' => $page,
         ]);
         $headers = [
-            "Authorization" => "Bearer {$this->credentials->getAuthorizationToken()}",
+            'Authorization' => "Bearer {$this->credentials->getAuthorizationToken()}",
         ];
         $options = [];
 
-        $response = $this->__request($this->credentials->test_mode, "GET", "payment-links?{$query}", $headers, $options);
+        $response = $this->__request($this->credentials->test_mode, 'GET', "payment-links?{$query}", $headers, $options);
 
         $status_code = $response->getStatusCode();
         $content = $response->getBody()->getContents();
@@ -47,32 +48,31 @@ final class PaymentLinks extends ApiClassesAbstract implements ApiClassesInterfa
             foreach ($content_array['data'] ?? [] as $key => $value) {
                 $collection->push($this->newElement($value));
             }
+
             return new PaginationElement($content_array, $collection);
         }
 
         return null;
     }
+
     /**
      * Create item
-     *
-     * @param array $data
-     * @return PaymentLinkElement|null
      */
     public function create(array $data): ?PaymentLinkElement
     {
         $validation = new PaymentLinkCreateValidation($data);
 
-        if (!$validation->passed()) {
-            ValidationException::message("PaymentLinks::create", $validation->errors(), 422);
+        if (! $validation->passed()) {
+            ValidationException::message('PaymentLinks::create', $validation->errors(), 422);
         }
         //
         $headers = [
-            "Authorization" => "Bearer {$this->credentials->getAuthorizationToken()}",
+            'Authorization' => "Bearer {$this->credentials->getAuthorizationToken()}",
         ];
         $options = [];
         $options['json'] = $data;
 
-        $response = $this->__request($this->credentials->test_mode, "POST", "payment-links", $headers, $options);
+        $response = $this->__request($this->credentials->test_mode, 'POST', 'payment-links', $headers, $options);
 
         $status_code = $response->getStatusCode();
         $content = $response->getBody()->getContents();
@@ -81,35 +81,32 @@ final class PaymentLinks extends ApiClassesAbstract implements ApiClassesInterfa
         if ($status_code === 200) {
             return $this->newElement($content_array);
         } elseif ($status_code === 422) {
-            ValidationException::message("PaymentLinks::create", $content_array['errors'] ?? [], 422);
+            ValidationException::message('PaymentLinks::create', $content_array['errors'] ?? [], 422);
         } else {
             InvalidHttpResponse::message($response, 403);
         }
 
         return null;
     }
+
     /**
      * Update item
-     *
-     * @param string $id
-     * @param array $data
-     * @return PaymentLinkElement|null
      */
     public function update(string $id, array $data): ?PaymentLinkElement
     {
         $validation = new PaymentLinkUpdateValidation($data);
 
-        if (!$validation->passed()) {
-            ValidationException::message("PaymentLinks::update", $validation->errors(), 422);
+        if (! $validation->passed()) {
+            ValidationException::message('PaymentLinks::update', $validation->errors(), 422);
         }
         //
         $headers = [
-            "Authorization" => "Bearer {$this->credentials->getAuthorizationToken()}",
+            'Authorization' => "Bearer {$this->credentials->getAuthorizationToken()}",
         ];
         $options = [];
         $options['json'] = $data;
 
-        $response = $this->__request($this->credentials->test_mode, "POST", "payment-links/{$id}", $headers, $options);
+        $response = $this->__request($this->credentials->test_mode, 'POST', "payment-links/{$id}", $headers, $options);
 
         $status_code = $response->getStatusCode();
         $content = $response->getBody()->getContents();
@@ -118,27 +115,25 @@ final class PaymentLinks extends ApiClassesAbstract implements ApiClassesInterfa
         if ($status_code === 200) {
             return $this->newElement($content_array);
         } elseif ($status_code === 422) {
-            ValidationException::message("PaymentLinks::update", $content_array['errors'] ?? [], 422);
+            ValidationException::message('PaymentLinks::update', $content_array['errors'] ?? [], 422);
         } else {
             InvalidHttpResponse::message($response, 403);
         }
 
         return null;
     }
+
     /**
      * Get Item
-     *
-     * @param string $id
-     * @return PaymentLinkElement|null
      */
     public function get(string $id): ?PaymentLinkElement
     {
         $headers = [
-            "Authorization" => "Bearer {$this->credentials->getAuthorizationToken()}",
+            'Authorization' => "Bearer {$this->credentials->getAuthorizationToken()}",
         ];
         $options = [];
 
-        $response = $this->__request($this->credentials->test_mode, "GET", "payment-links/{$id}", $headers, $options);
+        $response = $this->__request($this->credentials->test_mode, 'GET', "payment-links/{$id}", $headers, $options);
 
         $status_code = $response->getStatusCode();
         $content = $response->getBody()->getContents();
@@ -154,26 +149,25 @@ final class PaymentLinks extends ApiClassesAbstract implements ApiClassesInterfa
 
         return null;
     }
+
     /**
      * Get Item Items
      *
-     * @param string $id
-     * @param integer $per_page
-     * @param integer $page
-     * @return PaginationElement|null
+     * @param  int  $per_page
+     * @param  int  $page
      */
     public function prices(string $id, $per_page = 30, $page = 1): ?PaginationElement
     {
         $query = http_build_query([
-            "per_page" => $per_page,
-            "page" => $page,
+            'per_page' => $per_page,
+            'page' => $page,
         ]);
         $headers = [
-            "Authorization" => "Bearer {$this->credentials->getAuthorizationToken()}",
+            'Authorization' => "Bearer {$this->credentials->getAuthorizationToken()}",
         ];
         $options = [];
 
-        $response = $this->__request($this->credentials->test_mode, "GET", "payment-links/{$id}/items?{$query}", $headers, $options);
+        $response = $this->__request($this->credentials->test_mode, 'GET', "payment-links/{$id}/items?{$query}", $headers, $options);
 
         $status_code = $response->getStatusCode();
         $content = $response->getBody()->getContents();
@@ -184,16 +178,15 @@ final class PaymentLinks extends ApiClassesAbstract implements ApiClassesInterfa
             foreach ($content_array['data'] ?? [] as $key => $value) {
                 $collection->push((new Prices($this->credentials))->newElement($value));
             }
+
             return new PaginationElement($content_array, $collection);
         }
 
         return null;
     }
+
     /**
      * Create new Element
-     *
-     * @param array $data
-     * @return PaymentLinkElement
      */
     public function newElement(array $data): PaymentLinkElement
     {
@@ -208,6 +201,6 @@ final class PaymentLinks extends ApiClassesAbstract implements ApiClassesInterfa
             ->setUrl($data['url'] ?? null)
             ->setCreatedAt(Carbon::parse($data['created_at']))
             ->setUpdatedAt(Carbon::parse($data['updated_at']))
-            ->attachMethodPrices(new PaymentLinkHasManyPricesRelation($this, new Prices($this->credentials), ["id" => $data['id']]));
+            ->attachMethodPrices(new PaymentLinkHasManyPricesRelation($this, new Prices($this->credentials), ['id' => $data['id']]));
     }
 }

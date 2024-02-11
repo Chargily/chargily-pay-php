@@ -18,25 +18,26 @@ use Chargily\ChargilyPay\Validation\Api\ProductUpdateValidation;
 final class Products extends ApiClassesAbstract implements ApiClassesInterface
 {
     use GuzzleHttpTrait;
+
     /**
      * Get all items
      *
-     * @param integer $per_page
-     * @param integer $page
+     * @param  int  $per_page
+     * @param  int  $page
      * @return Collection
      */
     public function all($per_page = 10, $page = 1): ?PaginationElement
     {
         $query = http_build_query([
-            "per_page" => $per_page,
-            "page" => $page,
+            'per_page' => $per_page,
+            'page' => $page,
         ]);
         $headers = [
-            "Authorization" => "Bearer {$this->credentials->getAuthorizationToken()}",
+            'Authorization' => "Bearer {$this->credentials->getAuthorizationToken()}",
         ];
         $options = [];
 
-        $response = $this->__request($this->credentials->test_mode, "GET", "products?{$query}", $headers, $options);
+        $response = $this->__request($this->credentials->test_mode, 'GET', "products?{$query}", $headers, $options);
 
         $status_code = $response->getStatusCode();
         $content = $response->getBody()->getContents();
@@ -47,32 +48,31 @@ final class Products extends ApiClassesAbstract implements ApiClassesInterface
             foreach ($content_array['data'] ?? [] as $key => $value) {
                 $collection->push($this->newElement($value));
             }
+
             return new PaginationElement($content_array, $collection);
         }
 
         return null;
     }
+
     /**
      * Create item
-     *
-     * @param array $data
-     * @return ProductElement|null
      */
     public function create(array $data): ?ProductElement
     {
         $validation = new ProductCreateValidation($data);
 
-        if (!$validation->passed()) {
-            ValidationException::message("Product::create", $validation->errors(), 422);
+        if (! $validation->passed()) {
+            ValidationException::message('Product::create', $validation->errors(), 422);
         }
         //
         $headers = [
-            "Authorization" => "Bearer {$this->credentials->getAuthorizationToken()}",
+            'Authorization' => "Bearer {$this->credentials->getAuthorizationToken()}",
         ];
         $options = [];
         $options['json'] = $data;
 
-        $response = $this->__request($this->credentials->test_mode, "POST", "products", $headers, $options);
+        $response = $this->__request($this->credentials->test_mode, 'POST', 'products', $headers, $options);
 
         $status_code = $response->getStatusCode();
         $content = $response->getBody()->getContents();
@@ -81,35 +81,32 @@ final class Products extends ApiClassesAbstract implements ApiClassesInterface
         if ($status_code === 200) {
             return $this->newElement($content_array);
         } elseif ($status_code === 422) {
-            ValidationException::message("Product::create", $content_array['errors'] ?? [], 422);
+            ValidationException::message('Product::create', $content_array['errors'] ?? [], 422);
         } else {
             InvalidHttpResponse::message($response, 403);
         }
 
         return null;
     }
+
     /**
      * Update item
-     *
-     * @param string $id
-     * @param array $data
-     * @return ProductElement|null
      */
     public function update(string $id, array $data): ?ProductElement
     {
         $validation = new ProductUpdateValidation($data);
 
-        if (!$validation->passed()) {
-            ValidationException::message("Product::update", $validation->errors(), 422);
+        if (! $validation->passed()) {
+            ValidationException::message('Product::update', $validation->errors(), 422);
         }
         //
         $headers = [
-            "Authorization" => "Bearer {$this->credentials->getAuthorizationToken()}",
+            'Authorization' => "Bearer {$this->credentials->getAuthorizationToken()}",
         ];
         $options = [];
         $options['json'] = $data;
 
-        $response = $this->__request($this->credentials->test_mode, "POST", "products/{$id}", $headers, $options);
+        $response = $this->__request($this->credentials->test_mode, 'POST', "products/{$id}", $headers, $options);
 
         $status_code = $response->getStatusCode();
         $content = $response->getBody()->getContents();
@@ -118,27 +115,25 @@ final class Products extends ApiClassesAbstract implements ApiClassesInterface
         if ($status_code === 200) {
             return $this->newElement($content_array);
         } elseif ($status_code === 422) {
-            ValidationException::message("Product::update", $content_array['errors'] ?? [], 422);
+            ValidationException::message('Product::update', $content_array['errors'] ?? [], 422);
         } else {
             InvalidHttpResponse::message($response, 403);
         }
 
         return null;
     }
+
     /**
      * Get Item
-     *
-     * @param string $id
-     * @return ProductElement|null
      */
     public function get(string $id): ?ProductElement
     {
         $headers = [
-            "Authorization" => "Bearer {$this->credentials->getAuthorizationToken()}",
+            'Authorization' => "Bearer {$this->credentials->getAuthorizationToken()}",
         ];
         $options = [];
 
-        $response = $this->__request($this->credentials->test_mode, "GET", "products/{$id}", $headers, $options);
+        $response = $this->__request($this->credentials->test_mode, 'GET', "products/{$id}", $headers, $options);
 
         $status_code = $response->getStatusCode();
         $content = $response->getBody()->getContents();
@@ -154,20 +149,18 @@ final class Products extends ApiClassesAbstract implements ApiClassesInterface
 
         return null;
     }
+
     /**
      * Delete Item
-     *
-     * @param string $id
-     * @return boolean
      */
     public function delete(string $id): bool
     {
         $headers = [
-            "Authorization" => "Bearer {$this->credentials->getAuthorizationToken()}",
+            'Authorization' => "Bearer {$this->credentials->getAuthorizationToken()}",
         ];
         $options = [];
 
-        $response = $this->__request($this->credentials->test_mode, "DELETE", "products/{$id}", $headers, $options);
+        $response = $this->__request($this->credentials->test_mode, 'DELETE', "products/{$id}", $headers, $options);
 
         $status_code = $response->getStatusCode();
 
@@ -177,25 +170,25 @@ final class Products extends ApiClassesAbstract implements ApiClassesInterface
 
         return false;
     }
+
     /**
      * Get item prices
      *
-     * @param  string $id product id
-     * @return PaginationElement
+     * @param  string  $id  product id
      */
     public function prices(string $id, $per_page = 10, $page = 1): ?PaginationElement
     {
         $query = http_build_query([
-            "per_page" => $per_page,
-            "page" => $page,
+            'per_page' => $per_page,
+            'page' => $page,
         ]);
 
         $headers = [
-            "Authorization" => "Bearer {$this->credentials->getAuthorizationToken()}",
+            'Authorization' => "Bearer {$this->credentials->getAuthorizationToken()}",
         ];
         $options = [];
 
-        $response = $this->__request($this->credentials->test_mode, "GET", "products/{$id}/prices?$query", $headers, $options);
+        $response = $this->__request($this->credentials->test_mode, 'GET', "products/{$id}/prices?$query", $headers, $options);
 
         $status_code = $response->getStatusCode();
         $content = $response->getBody()->getContents();
@@ -206,16 +199,15 @@ final class Products extends ApiClassesAbstract implements ApiClassesInterface
             foreach ($content_array['data'] ?? [] as $key => $value) {
                 $collection->push((new Prices($this->credentials))->newElement($value));
             }
+
             return new PaginationElement($content_array, $collection);
         }
 
         return null;
     }
+
     /**
      * Create new Element
-     *
-     * @param array $data
-     * @return ProductElement
      */
     public function newElement(array $data): ProductElement
     {
@@ -227,6 +219,6 @@ final class Products extends ApiClassesAbstract implements ApiClassesInterface
             ->setMetadata($data['metadata'])
             ->setCreatedAt(Carbon::parse($data['created_at']))
             ->setUpdatedAt(Carbon::parse($data['updated_at']))
-            ->attachMethodPrices(new ProductHasManyPricesRelation($this, new Prices($this->credentials), ["id" => $data['id']]));
+            ->attachMethodPrices(new ProductHasManyPricesRelation($this, new Prices($this->credentials), ['id' => $data['id']]));
     }
 }

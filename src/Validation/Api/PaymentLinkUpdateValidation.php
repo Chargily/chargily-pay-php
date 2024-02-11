@@ -9,21 +9,19 @@ final class PaymentLinkUpdateValidation extends Validation implements Validation
 {
     /**
      * Rules
-     *
-     * @return array
      */
     public function rules(): array
     {
         return [
-            "name" => "nullable|min:1",
-            "items" => "nullable|array",
-            "items.*.price" => "required",
-            "items.*.quantity" => "required|integer",
-            "items.*.adjustable_quantity" => "nullable|boolean",
-            "after_completion_message" => "nullable|min:1",
-            "pass_fees_to_customer" => "nullable|boolean",
-            "locale" => "nullable|min:2|max:2",
-            "metadata" => "nullable|array",
+            'name' => 'nullable|min:1',
+            'items' => 'nullable|array',
+            'items.*.price' => 'required',
+            'items.*.quantity' => 'required|integer',
+            'items.*.adjustable_quantity' => 'nullable|boolean',
+            'after_completion_message' => 'nullable|min:1',
+            'pass_fees_to_customer' => 'nullable|boolean',
+            'locale' => 'nullable|min:2|max:2',
+            'metadata' => 'nullable|array',
         ];
     }
 }

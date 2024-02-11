@@ -17,25 +17,26 @@ use Chargily\ChargilyPay\Validation\Api\CheckoutCreateValidation;
 final class Checkouts extends ApiClassesAbstract implements ApiClassesInterface
 {
     use GuzzleHttpTrait;
+
     /**
      * Get all items
      *
-     * @param integer $per_page
-     * @param integer $page
+     * @param  int  $per_page
+     * @param  int  $page
      * @return Collection
      */
     public function all($per_page = 10, $page = 1): ?PaginationElement
     {
         $query = http_build_query([
-            "per_page" => $per_page,
-            "page" => $page,
+            'per_page' => $per_page,
+            'page' => $page,
         ]);
         $headers = [
-            "Authorization" => "Bearer {$this->credentials->getAuthorizationToken()}",
+            'Authorization' => "Bearer {$this->credentials->getAuthorizationToken()}",
         ];
         $options = [];
 
-        $response = $this->__request($this->credentials->test_mode, "GET", "checkouts?{$query}", $headers, $options);
+        $response = $this->__request($this->credentials->test_mode, 'GET', "checkouts?{$query}", $headers, $options);
 
         $status_code = $response->getStatusCode();
         $content = $response->getBody()->getContents();
@@ -46,32 +47,31 @@ final class Checkouts extends ApiClassesAbstract implements ApiClassesInterface
             foreach ($content_array['data'] ?? [] as $key => $value) {
                 $collection->push($this->newElement($value));
             }
+
             return new PaginationElement($content_array, $collection);
         }
 
         return null;
     }
+
     /**
      * Create item
-     *
-     * @param array $data
-     * @return CheckoutElement|null
      */
     public function create(array $data): ?CheckoutElement
     {
         $validation = new CheckoutCreateValidation($data);
 
-        if (!$validation->passed()) {
-            ValidationException::message("Checkout::create", $validation->errors(), 422);
+        if (! $validation->passed()) {
+            ValidationException::message('Checkout::create', $validation->errors(), 422);
         }
         //
         $headers = [
-            "Authorization" => "Bearer {$this->credentials->getAuthorizationToken()}",
+            'Authorization' => "Bearer {$this->credentials->getAuthorizationToken()}",
         ];
         $options = [];
         $options['json'] = $data;
 
-        $response = $this->__request($this->credentials->test_mode, "POST", "checkouts", $headers, $options);
+        $response = $this->__request($this->credentials->test_mode, 'POST', 'checkouts', $headers, $options);
 
         $status_code = $response->getStatusCode();
         $content = $response->getBody()->getContents();
@@ -80,27 +80,25 @@ final class Checkouts extends ApiClassesAbstract implements ApiClassesInterface
         if ($status_code === 200) {
             return $this->newElement($content_array);
         } elseif ($status_code === 422) {
-            ValidationException::message("Checkout::create", $content_array['errors'] ?? [], 422);
+            ValidationException::message('Checkout::create', $content_array['errors'] ?? [], 422);
         } else {
             InvalidHttpResponse::message($response, 403);
         }
 
         return null;
     }
+
     /**
      * Get Item
-     *
-     * @param string $id
-     * @return CheckoutElement|null
      */
     public function get(string $id): ?CheckoutElement
     {
         $headers = [
-            "Authorization" => "Bearer {$this->credentials->getAuthorizationToken()}",
+            'Authorization' => "Bearer {$this->credentials->getAuthorizationToken()}",
         ];
         $options = [];
 
-        $response = $this->__request($this->credentials->test_mode, "GET", "checkouts/{$id}", $headers, $options);
+        $response = $this->__request($this->credentials->test_mode, 'GET', "checkouts/{$id}", $headers, $options);
 
         $status_code = $response->getStatusCode();
         $content = $response->getBody()->getContents();
@@ -116,26 +114,25 @@ final class Checkouts extends ApiClassesAbstract implements ApiClassesInterface
 
         return null;
     }
+
     /**
      * Get Item Items
      *
-     * @param string $id
-     * @param integer $per_page
-     * @param integer $page
-     * @return PaginationElement|null
+     * @param  int  $per_page
+     * @param  int  $page
      */
     public function getItems(string $id, $per_page = 30, $page = 1): ?PaginationElement
     {
         $query = http_build_query([
-            "per_page" => $per_page,
-            "page" => $page,
+            'per_page' => $per_page,
+            'page' => $page,
         ]);
         $headers = [
-            "Authorization" => "Bearer {$this->credentials->getAuthorizationToken()}",
+            'Authorization' => "Bearer {$this->credentials->getAuthorizationToken()}",
         ];
         $options = [];
 
-        $response = $this->__request($this->credentials->test_mode, "GET", "checkouts/{$id}/items?{$query}", $headers, $options);
+        $response = $this->__request($this->credentials->test_mode, 'GET', "checkouts/{$id}/items?{$query}", $headers, $options);
 
         $status_code = $response->getStatusCode();
         $content = $response->getBody()->getContents();
@@ -146,25 +143,24 @@ final class Checkouts extends ApiClassesAbstract implements ApiClassesInterface
             foreach ($content_array['data'] ?? [] as $key => $value) {
                 $collection->push((new Prices($this->credentials))->newElement($value));
             }
+
             return new PaginationElement($content_array, $collection);
         }
 
         return null;
     }
+
     /**
      * Mark Checkout as Expire
-     *
-     * @param string $id
-     * @return CheckoutElement|null
      */
     public function expire(string $id): ?CheckoutElement
     {
         $headers = [
-            "Authorization" => "Bearer {$this->credentials->getAuthorizationToken()}",
+            'Authorization' => "Bearer {$this->credentials->getAuthorizationToken()}",
         ];
         $options = [];
 
-        $response = $this->__request($this->credentials->test_mode, "POST", "checkouts/{$id}/expire", $headers, $options);
+        $response = $this->__request($this->credentials->test_mode, 'POST', "checkouts/{$id}/expire", $headers, $options);
 
         $status_code = $response->getStatusCode();
         $content = $response->getBody()->getContents();
@@ -180,11 +176,9 @@ final class Checkouts extends ApiClassesAbstract implements ApiClassesInterface
 
         return null;
     }
+
     /**
      * Create new Element
-     *
-     * @param array $data
-     * @return CheckoutElement
      */
     public function newElement(array $data): CheckoutElement
     {
@@ -208,6 +202,6 @@ final class Checkouts extends ApiClassesAbstract implements ApiClassesInterface
             ->setUrl($data['checkout_url'] ?? null)
             ->setCreatedAt(Carbon::parse($data['created_at']))
             ->setUpdatedAt(Carbon::parse($data['updated_at']))
-            ->attachMethodPrices(new CheckoutHasManyPricesRelation($this, new Prices($this->credentials), ["id" => $data['id']]));
+            ->attachMethodPrices(new CheckoutHasManyPricesRelation($this, new Prices($this->credentials), ['id' => $data['id']]));
     }
 }

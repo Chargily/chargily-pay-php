@@ -18,7 +18,6 @@ use Chargily\ChargilyPay\Core\Interfaces\ElementsInterface;
  * @method \Chargily\ChargilyPay\Elements\PaymentLinkElement getUpdatedAt()
  * @method \Chargily\ChargilyPay\Elements\PaymentLinkElement prices()
  */
-
 class PaymentLinkElement extends ElementsAbstract implements ElementsInterface
 {
 }

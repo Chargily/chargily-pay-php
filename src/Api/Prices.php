@@ -18,25 +18,26 @@ use Chargily\ChargilyPay\Validation\Api\PriceUpdateValidation;
 final class Prices extends ApiClassesAbstract implements ApiClassesInterface
 {
     use GuzzleHttpTrait;
+
     /**
      * Get all items
      *
-     * @param integer $per_page
-     * @param integer $page
+     * @param  int  $per_page
+     * @param  int  $page
      * @return Collection
      */
     public function all($per_page = 10, $page = 1): ?PaginationElement
     {
         $query = http_build_query([
-            "per_page" => $per_page,
-            "page" => $page,
+            'per_page' => $per_page,
+            'page' => $page,
         ]);
         $headers = [
-            "Authorization" => "Bearer {$this->credentials->getAuthorizationToken()}",
+            'Authorization' => "Bearer {$this->credentials->getAuthorizationToken()}",
         ];
         $options = [];
 
-        $response = $this->__request($this->credentials->test_mode, "GET", "prices?{$query}", $headers, $options);
+        $response = $this->__request($this->credentials->test_mode, 'GET', "prices?{$query}", $headers, $options);
 
         $status_code = $response->getStatusCode();
         $content = $response->getBody()->getContents();
@@ -47,32 +48,31 @@ final class Prices extends ApiClassesAbstract implements ApiClassesInterface
             foreach ($content_array['data'] ?? [] as $key => $value) {
                 $collection->push($this->newElement($value));
             }
+
             return new PaginationElement($content_array, $collection);
         }
 
         return null;
     }
+
     /**
      * Create item
-     *
-     * @param array $data
-     * @return PriceElement|null
      */
     public function create(array $data): ?PriceElement
     {
         $validation = new PriceCreateValidation($data);
 
-        if (!$validation->passed()) {
-            ValidationException::message("Prices::create", $validation->errors(), 422);
+        if (! $validation->passed()) {
+            ValidationException::message('Prices::create', $validation->errors(), 422);
         }
         //
         $headers = [
-            "Authorization" => "Bearer {$this->credentials->getAuthorizationToken()}",
+            'Authorization' => "Bearer {$this->credentials->getAuthorizationToken()}",
         ];
         $options = [];
         $options['json'] = $data;
 
-        $response = $this->__request($this->credentials->test_mode, "POST", "prices", $headers, $options);
+        $response = $this->__request($this->credentials->test_mode, 'POST', 'prices', $headers, $options);
 
         $status_code = $response->getStatusCode();
         $content = $response->getBody()->getContents();
@@ -81,35 +81,32 @@ final class Prices extends ApiClassesAbstract implements ApiClassesInterface
         if ($status_code === 200) {
             return $this->newElement($content_array);
         } elseif ($status_code === 422) {
-            ValidationException::message("Prices::create", $content_array['errors'] ?? [], 422);
+            ValidationException::message('Prices::create', $content_array['errors'] ?? [], 422);
         } else {
             InvalidHttpResponse::message($response, 403);
         }
 
         return null;
     }
+
     /**
      * Update item
-     *
-     * @param string $id
-     * @param array $data
-     * @return PriceElement|null
      */
     public function update(string $id, array $data): ?PriceElement
     {
         $validation = new PriceUpdateValidation($data);
 
-        if (!$validation->passed()) {
-            ValidationException::message("Prices::update", $validation->errors(), 422);
+        if (! $validation->passed()) {
+            ValidationException::message('Prices::update', $validation->errors(), 422);
         }
         //
         $headers = [
-            "Authorization" => "Bearer {$this->credentials->getAuthorizationToken()}",
+            'Authorization' => "Bearer {$this->credentials->getAuthorizationToken()}",
         ];
         $options = [];
         $options['json'] = $data;
 
-        $response = $this->__request($this->credentials->test_mode, "POST", "prices/{$id}", $headers, $options);
+        $response = $this->__request($this->credentials->test_mode, 'POST', "prices/{$id}", $headers, $options);
 
         $status_code = $response->getStatusCode();
         $content = $response->getBody()->getContents();
@@ -118,27 +115,25 @@ final class Prices extends ApiClassesAbstract implements ApiClassesInterface
         if ($status_code === 200) {
             return $this->newElement($content_array);
         } elseif ($status_code === 422) {
-            ValidationException::message("Prices::update", $content_array['errors'] ?? [], 422);
+            ValidationException::message('Prices::update', $content_array['errors'] ?? [], 422);
         } else {
             InvalidHttpResponse::message($response, 403);
         }
 
         return null;
     }
+
     /**
      * Get Item
-     *
-     * @param string $id
-     * @return PriceElement|null
      */
     public function get(string $id): ?PriceElement
     {
         $headers = [
-            "Authorization" => "Bearer {$this->credentials->getAuthorizationToken()}",
+            'Authorization' => "Bearer {$this->credentials->getAuthorizationToken()}",
         ];
         $options = [];
 
-        $response = $this->__request($this->credentials->test_mode, "GET", "prices/{$id}", $headers, $options);
+        $response = $this->__request($this->credentials->test_mode, 'GET', "prices/{$id}", $headers, $options);
 
         $status_code = $response->getStatusCode();
         $content = $response->getBody()->getContents();
@@ -154,11 +149,9 @@ final class Prices extends ApiClassesAbstract implements ApiClassesInterface
 
         return null;
     }
+
     /**
      * Create new Element
-     *
-     * @param array $data
-     * @return PriceElement
      */
     public function newElement(array $data): PriceElement
     {

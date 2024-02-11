@@ -2,8 +2,8 @@
 
 namespace Chargily\ChargilyPay\Exceptions;
 
-use Exception;
 use Chargily\ChargilyPay\Core\Helpers\Json;
+use Exception;
 
 final class InvalidHttpResponse extends Exception
 {
@@ -20,12 +20,10 @@ final class InvalidHttpResponse extends Exception
         $reasonPhrase = $response->getReasonPhrase();
         $content = $response->getBody()->getContents();
 
-        $content_message = "";
+        $content_message = '';
         if (Json::validate($content)) {
             $content_message = "(Content: {$content})";
         }
         throw new self("Invalid Http response (Status: {$status}:{$reasonPhrase}) {$content_message}.", $code);
-
-        return;
     }
 }
