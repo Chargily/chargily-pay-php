@@ -1,9 +1,8 @@
 # Chargily Pay V2
 
-PHP Library for Chargily Pay™ Gateway - V2. 
+PHP Library for Chargily Pay™ Gateway - V2.
 
 The easiest way to integrate e-payment API through EDAHABIA of Algerie Poste and CIB of SATIM into your PHP project.
-
 
 # Requirements
 
@@ -58,3 +57,7 @@ composer require chargily/chargily-pay
 -   [Prices](https://github.com/Chargily/chargily-pay-php/blob/main/docs/Prices.md)
 -   [Products](https://github.com/Chargily/chargily-pay-php/blob/main/docs/Products.md)
 -   [Webhook](https://github.com/Chargily/chargily-pay-php/blob/main/docs/Webhook.md)
+
+# Documentation For frameworks
+
+-   [Balance](https://github.com/Chargily/chargily-pay-php/blob/main/docs/frameworks/Laravel.md)
