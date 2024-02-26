@@ -1,6 +1,6 @@
 # Chargily Pay V2
 
-PHP Library for Chargily Pay™ Gateway - V2.
+PHP Library for [Chargily Pay™](https://chargily.com/business/pay "Chargily Pay™") Gateway - V2.
 
 The easiest way to integrate e-payment API through EDAHABIA of Algerie Poste and CIB of SATIM into your PHP/Laravel project.
 
