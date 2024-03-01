@@ -15,12 +15,13 @@ final class CheckoutCreateValidation extends Validation implements ValidationInt
     public function rules(): array
     {
         return [
-            "success_url" => "required|url",
+            "collect_shipping_address" => "nullable|boolean",
+            "locale" => "nullable|min:2|max:2",
+            "description" => "nullable|min:1",
             "customer_id" => "nullable|min:1",
             "failure_url" => "nullable|url",
+            "success_url" => "nullable|url",
             "webhook_endpoint" => "nullable|url",
-            "description" => "nullable|min:1",
-            "locale" => "nullable|min:2|max:2",
             "metadata" => "nullable|array",
         ];
     }
