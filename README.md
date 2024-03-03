@@ -60,4 +60,4 @@ composer require chargily/chargily-pay
 
 # Documentation For frameworks
 
--   [Balance](https://github.com/Chargily/chargily-pay-php/blob/main/docs/frameworks/Laravel.md)
+-   [Laravel](https://github.com/Chargily/chargily-pay-php/blob/main/docs/frameworks/Laravel.md)
