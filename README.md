@@ -84,7 +84,7 @@ We welcome contributions of all kinds, whether it's bug fixes, feature enhanceme
 
 2. **Clone the Repository:** Clone your forked repository to your local machine using the following command:
 
-```
+```bash
 git clone https://github.com/Chargily/chargily-pay-php.git
 ```
 
