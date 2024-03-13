@@ -85,7 +85,7 @@ Route::post('chargilypay/webhook', [ChargilyPayController::class, "webhook"])->n
 ### 4. Create controler
 
 ```bash
-php artisan make:controler ChargilyPayController
+php artisan make:controller ChargilyPayController
 ```
 
 -   Attach the following methods to the controller
@@ -137,32 +137,17 @@ class ChargilyPayController extends Controller
         $user = auth()->user();
         $checkout_id = $request->input("checkout_id");
         $checkout = $this->chargilyPayInstance()->checkouts()->get($checkout_id);
+        $payment = null;
 
         if ($checkout) {
             $metadata = $checkout->getMetadata();
             $payment = \App\Models\ChargilyPayment::find($metadata['payment_id']);
-
-            if ($payment) {
-                if ($checkout->getStatus() === "paid") {
-                    //update payment status in database
-                    $payment->status = "paid";
-                    $payment->update();
-                    /////
-                    ///// Confirm your order
-                    /////
-
-                } else if ($checkout->getStatus() === "failed" or $checkout->getStatus() === "canceled") {
-                    //update payment status in database
-                    $payment->status = "failed";
-                    $payment->update();
-                    /////
-                    /////  Cancel your order
-                    /////
-
-                }
-            }
+            ////
+            //// Is not recomended to process payment in back page / success or fail page
+            //// Doing payment processing in webhook for best practices
+            ////
         }
-        return redirect("redirect to your order page");
+        dd($checkout,$payment);
     }
     /**
      * This action will be processed in the background

@@ -21,12 +21,13 @@ final class Webhook extends ApiClassesAbstract implements ApiClassesInterface
     {
         $headers = getallheaders();
         $signature = isset($headers['signature']) ? $headers['signature'] : "";
+        $signature = (empty($signature) and isset($headers['Signature'])) ? $headers['Signature'] : "";
+
         $payload = file_get_contents('php://input');
         $computed = hash_hmac('sha256', $payload, $this->credentials->secret);
-
         if (hash_equals($signature, $computed)) {
-            $event = json_decode($payload, true);
 
+            $event = json_decode($payload, true);
             return $this->newElement($event);
         }
         return null;
