@@ -4,6 +4,7 @@ namespace Chargily\ChargilyPay\Api;
 
 use Chargily\ChargilyPay\Core\Abstracts\ApiClassesAbstract;
 use Chargily\ChargilyPay\Core\Helpers\Carbon;
+use Chargily\ChargilyPay\Core\Helpers\HttpRequest;
 use Chargily\ChargilyPay\Core\Helpers\Str;
 use Chargily\ChargilyPay\Core\Interfaces\ApiClassesInterface;
 use Chargily\ChargilyPay\Core\Traits\GuzzleHttpTrait;
@@ -19,14 +20,12 @@ final class Webhook extends ApiClassesAbstract implements ApiClassesInterface
      */
     public function get(): ?WebhookElement
     {
-        $headers = getallheaders();
-        $signature = isset($headers['signature']) ? $headers['signature'] : "";
-        $signature = (empty($signature) and isset($headers['Signature'])) ? $headers['Signature'] : "";
+        $signature = HttpRequest::header("Signature") ?? "";
+        $payload = HttpRequest::body() ?? "";
 
-        $payload = file_get_contents('php://input');
-        $computed = hash_hmac('sha256', $payload, $this->credentials->secret);
-        if (hash_equals($signature, $computed)) {
+        $computed_signature = hash_hmac('sha256', $payload, $this->credentials->secret);
 
+        if (hash_equals($signature, $computed_signature)) {
             $event = json_decode($payload, true);
             return $this->newElement($event);
         }

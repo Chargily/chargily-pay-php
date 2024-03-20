@@ -71,4 +71,22 @@ abstract class ElementsAbstract
     {
         return $this->methods;
     }
+    /**
+     * Attributes To arrray
+     *
+     * @return string|null
+     */
+    public function toArray()
+    {
+        return $this->all();
+    }
+    /**
+     * Attributes To json
+     *
+     * @return string|null
+     */
+    public function toJson(): ?string
+    {
+        return json_encode($this->toArray()) ?? null;
+    }
 }
