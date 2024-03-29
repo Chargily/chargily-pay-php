@@ -60,7 +60,7 @@ php artisan make:model ChargilyPayment -m
 -   Routes :
 
 ```php
-Route::post('chargilypay/checkout', [ChargilyPayController::class, "checkout"])->name("chargilypay.checkout");
+Route::post('chargilypay/redirect', [ChargilyPayController::class, "redirect"])->name("chargilypay.redirect");
 Route::get('chargilypay/back', [ChargilyPayController::class, "back"])->name("chargilypay.back");
 Route::post('chargilypay/webhook', [ChargilyPayController::class, "webhook"])->name("chargilypay.webhook_endpoint");
 ```
