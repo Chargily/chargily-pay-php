@@ -25,7 +25,7 @@ php artisan make:model ChargilyPayment -m
 
 ```php
     // .....
-    class Payment extends Model
+    class ChargilyPayment extends Model
     {
         use HasFactory;
         protected $fillable = ["user_id","status","currency","amount"];
