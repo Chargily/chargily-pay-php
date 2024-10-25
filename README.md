@@ -1,92 +1,153 @@
-# Welcome to PHP Package Repository
-# for [Chargily Pay](https://chargily.com/business/pay "Chargily Pay")™ Gateway - V2.
+## Welcome to PHP Package Repository
 
-Thank you for your interest in PHP Package of Chargily Pay™, an open source project by Chargily, a leading fintech company in Algeria specializing in payment solutions and  e-commerce facilitating, this Package is providing the easiest and free way to integrate e-payment API through widespread payment methods in Algeria such as EDAHABIA (Algerie Post) and CIB (SATIM) into your PHP/Laravel projects.
+# PHP Client for [Chargily Pay](https://chargily.com/business/pay "Chargily Pay")™ Gateway - V2.
 
-This package is developed by **Mohamed Boubazine ([Medboubazine](https://github.com/Medboubazine))** and is open to contributions from developers like you.
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/chargily/chargily-pay.svg?style=flat-square)](https://packagist.org/packages/chargily/chargily-pay)
+[![Tests](https://img.shields.io/github/actions/workflow/status/Chargily/chargily-pay-php/php.yml?branch=main&label=tests&style=flat-square)](https://github.com/Chargily/chargily-pay-php/actions/workflows/php.yml)
+[![Total Downloads](https://img.shields.io/packagist/dt/chargily/chargily-pay.svg?style=flat-square)](https://packagist.org/packages/chargily/chargily-pay)
 
-# Requirements
+<img src="https://mintlify.s3-us-west-1.amazonaws.com/chargily-78/logo/light.svg" alt="Chargily Logo" width="300"/>
 
--   PHP >= 8.1.10
 
-# Installation
+Thank you for your interest in the `Chargily Pay™` PHP package! Developed by Chargily, Algeria's leading fintech innovator in payment and e-commerce solutions, this open-source package offers a seamless, cost-free way to integrate e-payment APIs into PHP and Laravel projects.
 
--   Via Composer (Recomended)
+Supporting major Algerian payment methods, including EDAHABIA (Algerie Poste) and CIB (SATIM), this package simplifies e-commerce integration across popular platforms in Algeria.
+
+Originally created by **Mohamed Boubazine ([Medboubazine](https://github.com/Medboubazine))**, the package is actively maintained by a [welcoming community of contributors](https://github.com/Chargily/chargily-pay-php/graphs/contributors). 
+
+Contributions from developers like you are highly valued and encouraged!
+
+
+## Requirements
+
+To get started with the `Chargily Pay™` PHP package, ensure you have the following:
+
+- **PHP**: Version 8.1 or higher
+- **Chargily API Credentials**: Obtain your API keys from the [Chargily Developer Dashboard](https://pay.chargily.com/test/dashboard/developers-corner)
+
+## Installation
+
+Install the `Chargily Pay™` PHP package via Composer:
 
 ```bash
 composer require chargily/chargily-pay
 ```
 
-# Getting Started
+## Getting Started
 
--   Replace **test** by **live** if you are in production mode
--   Replace **public_key_here** with your public key shown in the Chargily Pay dashboard in the developer section
--   Replace **secret_key_here** with your secret key shown in the Chargily Pay dashboard in the developer section
+### Create your first Chargily Pay™ checkout link
 
 ```php
+use Chargily\ChargilyPay\Auth\Credentials;
+use Chargily\ChargilyPay\ChargilyPay;
 
-    use Chargily\ChargilyPay\Auth\Credentials;
-    use Chargily\ChargilyPay\ChargilyPay;
+require 'vendor/autoload.php';
 
-    require "path-to-vendor/autoload.php";
+try{
 
+    /**
+     * Create a new Credentials instance
+    */
     $credentials = new Credentials([
-        "mode" => "test",
+        "mode" => "test", // or live
         "public" => "public_key_here",
-        "secret" => "secret_key_here",
+        "secret" => "secret_key_here"
     ]);
 
-    $chargily_pay = new ChargilyPay($credentials);
+    /**
+     * Create a new ChargilyPay instance
+     */
+    $chargily = new ChargilyPay($credentials);
+    
+    /**
+     * Create a new product
+     */
+    $product = $chargily_pay
+        ->products()
+        ->create([
+            'name' => "My product name",
+            'description' => "My product description",
+        ]);
 
-    $chargily_pay->balance()->get(),
-    $chargily_pay->checkouts()->all(),
-    $chargily_pay->customers()->all(),
-    $chargily_pay->payment_links()->all(),
-    $chargily_pay->prices()->all(),
-    $chargily_pay->products()->all(),
-    //validate and get Webhook details
-    $chargily_pay->webhook()->get()
+    /**
+     * Create a price for the product
+     */
+    $price = $chargily_pay->prices()
+        ->create([
+            'product_id' => $product->getId(),
+            'amount' => 2500,
+            'currency' => 'dzd',
+        ]);
 
+    /**
+     * Create a new checkout for the priced product
+     */
+    $checkout = $chargily_pay->checkouts()
+        ->create([
+            'locale' => 'en',
+            'description' => 'This description for checkout or product',
+            'items' => [
+                [
+                    'price' => $price->getId(),
+                    'quantity' => 1,
+                ],
+            ],
+            'success_url' => "https://example.com/success",
+            'failure_url' => "https://example.com/failure",
+        ]);
+        
+    /**
+     * Redirect the user to the checkout page
+     */
+
+    header("Location: ".$checkout->getUrl());
+    
+} catch (Exception $e) {
+
+    echo $e->getMessage();
+    
+}
 ```
 
-# Documentation
+## Documentation
 
--   [Balance](https://github.com/Chargily/chargily-pay-php/blob/main/docs/Balance.md)
--   [Checkouts](https://github.com/Chargily/chargily-pay-php/blob/main/docs/Checkouts.md)
--   [Customers](https://github.com/Chargily/chargily-pay-php/blob/main/docs/Customers.md)
--   [Payment Links](https://github.com/Chargily/chargily-pay-php/blob/main/docs/PaymentLinks.md)
--   [Prices](https://github.com/Chargily/chargily-pay-php/blob/main/docs/Prices.md)
--   [Products](https://github.com/Chargily/chargily-pay-php/blob/main/docs/Products.md)
--   [Webhook](https://github.com/Chargily/chargily-pay-php/blob/main/docs/Webhook.md)
+Explore detailed guides and references for integrating `Chargily Pay™` features:
 
-# Documentation For frameworks
+- [Balance Overview](https://github.com/Chargily/chargily-pay-php/blob/main/docs/Balance.md)
+- [Checkouts Integration](https://github.com/Chargily/chargily-pay-php/blob/main/docs/Checkouts.md)
+- [Managing Customers](https://github.com/Chargily/chargily-pay-php/blob/main/docs/Customers.md)
+- [Creating Payment Links](https://github.com/Chargily/chargily-pay-php/blob/main/docs/PaymentLinks.md)
+- [Setting Prices](https://github.com/Chargily/chargily-pay-php/blob/main/docs/Prices.md)
+- [Product Catalog](https://github.com/Chargily/chargily-pay-php/blob/main/docs/Products.md)
+- [Webhook Configuration](https://github.com/Chargily/chargily-pay-php/blob/main/docs/Webhook.md)
 
--   [Laravel](https://github.com/Chargily/chargily-pay-php/blob/main/docs/frameworks/Laravel.md)
+## Documentation for Frameworks
 
+- [Laravel Integration Guide](https://github.com/Chargily/chargily-pay-php/blob/main/docs/frameworks/Laravel.md)
 
 ## About Chargily Pay™ packages
 
-Chargily Pay™ packages/plugins are a collection of open source projects published by Chargily to facilitate the integration of our payment gateway into different programming languages and frameworks. Our goal is to empower developers and businesses by providing easy-to-use tools to seamlessly accept payments.
+`Chargily Pay™` packages/plugins are a collection of open source projects published by Chargily to facilitate the integration of our payment gateway into different programming languages and frameworks. Our goal is to empower developers and businesses by providing easy-to-use tools to seamlessly accept payments.
 
 ## API Documentation
 
-For detailed instructions on how to integrate with our API and utilize Chargily Pay™ in your projects, please refer to our [API Documentation](https://dev.chargily.com/pay-v2/introduction). 
+For comprehensive guidance on integrating our API and implementing `Chargily Pay™` in your projects, please refer to our [API Documentation](https://dev.chargily.com/pay-v2/introduction).
 
 ## Developers Community
 
-Join our developer community on Telegram to connect with fellow developers, ask questions, and stay updated on the latest news and developments related to Chargily Pay™ : [Telegram Community](https://chargi.link/PayTelegramCommunity)
+Join our developer community on Telegram to connect with fellow developers, ask questions, and stay updated on the latest news and developments related to `Chargily Pay™` : [Telegram Community](https://chargi.link/PayTelegramCommunity)
 
-## How to Contribute
+## Contributing Guide
 
-We welcome contributions of all kinds, whether it's bug fixes, feature enhancements, documentation improvements, or new plugin/package developments. Here's how you can get started:
+We appreciate all forms of contributions, including bug fixes, feature enhancements, documentation updates, and new plugin or package developments. Here’s how to get started:
 
-1. **Fork the Repository:** Click the "Fork" button in the top-right corner of this page to create your own copy of the repository.
+1. **Fork the Repository:** Click on the "Fork" button at the top-right of this page to create your personal copy of the repository.
 
-2. **Clone the Repository:** Clone your forked repository to your local machine using the following command:
+2. **Clone the Repository:** Download your forked repository to your local environment using this command:
 
-```bash
-git clone https://github.com/Chargily/chargily-pay-php.git
-```
+    ```bash
+    git clone https://github.com/Chargily/chargily-pay-php.git
+    ```
 
 3. **Make Changes:** Make your desired changes or additions to the codebase. Be sure to follow our coding standards and guidelines.
 
@@ -98,7 +159,13 @@ git clone https://github.com/Chargily/chargily-pay-php.git
 
 Have questions or need assistance? Join our developer community on [Telegram](https://chargi.link/PayTelegramCommunity) and connect with fellow developers and our team.
 
-We appreciate your interest in contributing to Chargily Pay™! Together, we can build something amazing.
+We appreciate your interest in contributing to `Chargily Pay™`! Together, we can build something amazing.
 
 Happy coding!
 
+
+## Security Reports
+
+If you discover any security vulnerabilities, please report them responsibly. 
+
+Contact us directly at [Whatsapp](https://chargi.link/WaPay) to ensure safe and secure handling of any potential issues.
