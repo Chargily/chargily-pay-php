@@ -60,40 +60,13 @@ try{
     $chargily = new ChargilyPay($credentials);
     
     /**
-     * Create a new product
-     */
-    $product = $chargily_pay
-        ->products()
-        ->create([
-            'name' => "My product name",
-            'description' => "My product description",
-        ]);
-
-    /**
-     * Create a price for the product
-     */
-    $price = $chargily_pay->prices()
-        ->create([
-            'product_id' => $product->getId(),
-            'amount' => 2500,
-            'currency' => 'dzd',
-        ]);
-
-    /**
      * Create a new checkout for the priced product
      */
     $checkout = $chargily_pay->checkouts()
         ->create([
-            'locale' => 'en',
-            'description' => 'This description for checkout or product',
-            'items' => [
-                [
-                    'price' => $price->getId(),
-                    'quantity' => 1,
-                ],
-            ],
+            'amount' => 2500,
+            'currency' => 'dzd',
             'success_url' => "https://example.com/success",
-            'failure_url' => "https://example.com/failure",
         ]);
         
     /**
