@@ -20,8 +20,8 @@ class ChargilyPayServiceProvider extends ServiceProvider
         $this->app->singleton(ChargilyPay::class, function ($app) {
             $credentials = new \Chargily\ChargilyPay\Auth\Credentials([
                 'mode'       => config('chargilypay.mode'),
-                'public_key' => config('chargilypay.public_key'),
-                'secret_key' => config('chargilypay.secret_key')
+                'public' => config('chargilypay.public_key'),
+                'secret' => config('chargilypay.secret_key')
             ]);
 
             return new ChargilyPay($credentials);
