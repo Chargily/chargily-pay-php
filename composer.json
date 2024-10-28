@@ -47,6 +47,16 @@
             "ChargilyTests\\ChargilyPay\\": "tests/"
         }
     },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Chargily\\ChargilyPay\\ChargilyPayServiceProvider"
+            ]
+        }
+    },
     "scripts": {
         "test": "vendor/bin/phpunit --bootstrap vendor/autoload.php --testdox --colors=always tests/"
     }
