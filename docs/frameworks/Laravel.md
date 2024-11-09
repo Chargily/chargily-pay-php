@@ -9,6 +9,34 @@
 composer require chargily/chargily-pay
 ```
 
+-   Publish the configuration file
+
+```bash
+php artisan vendor:publish --provider="Chargily\ChargilyPay\ChargilyPayServiceProvider"
+```
+
+This will create a chargily.php configuration file in your config directory.
+
+### Configuration and Environment Setup
+
+To configure the ChargilyPay package, update your .env file with the following environment variables:
+
+```env
+CHARGILY_PUBLIC_KEY=your_public_key
+CHARGILY_SECRET_KEY=your_secret_key
+CHARGILY_MODE=live  # or "test" for testing purposes
+```
+
+Replace `your_public_key` and `your_secret_key` with your Chargily credentials. Make sure these keys are kept secure and not shared.
+
+### Cache the Configuration
+
+After updating your .env file, remember to clear and cache the configuration to ensure Laravel reads the latest settings:
+
+```bash
+php artisan config:cache
+```
+
 ## Getting Started
 
 Follow the following steps one by one
@@ -93,6 +121,16 @@ php artisan make:controller ChargilyPayController
 ```php
 class ChargilyPayController extends Controller
 {
+    /**
+     * Create a new instance of the ChargilyPayController.
+     *
+     * @param \Chargily\ChargilyPay\ChargilyPay $chargilyPayInstance The ChargilyPay instance for handling payment interactions.
+     */
+    public function __construct(protected ChargilyPay $chargilyPayInstance)
+    {
+        //
+    }
+
     /**
      * The client will be redirected to the ChargilyPay payment page
      *
@@ -191,18 +229,6 @@ class ChargilyPayController extends Controller
             "status" => false,
             "message" => "Invalid Webhook request",
         ], 403);
-    }
-
-    /**
-     * Just a shortcut
-     */
-    protected function chargilyPayInstance()
-    {
-        return new \Chargily\ChargilyPay\ChargilyPay(new \Chargily\ChargilyPay\Auth\Credentials([
-            "mode" => "test",
-            "public" => "test_pk_*************************",
-            "secret" => "test_sk_*************************",
-        ]));
     }
 }
 ```
