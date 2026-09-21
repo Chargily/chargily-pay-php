@@ -30,7 +30,6 @@
         "guzzlehttp/guzzle": "^7.0",
         "rakit/validation": "^1.4",
         "illuminate/support": "^10.39|^11.0",
-        "medboubazine/number_format": "^1.1",
         "nesbot/carbon": "^2.72|^3.0"
     },
     "require-dev": {

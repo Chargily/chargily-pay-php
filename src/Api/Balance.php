@@ -4,7 +4,7 @@ namespace Chargily\ChargilyPay\Api;
 
 use Chargily\ChargilyPay\Core\Abstracts\ApiClassesAbstract;
 use Chargily\ChargilyPay\Core\Helpers\Collection;
-use Chargily\ChargilyPay\Core\Helpers\NumFormat;
+use Chargily\ChargilyPay\Core\Helpers\Number;
 use Chargily\ChargilyPay\Core\Interfaces\ApiClassesInterface;
 use Chargily\ChargilyPay\Core\Traits\GuzzleHttpTrait;
 use Chargily\ChargilyPay\Elements\WalletElement;
@@ -52,9 +52,9 @@ final class Balance extends ApiClassesAbstract implements ApiClassesInterface
     public function newElement(array $data): WalletElement
     {
         return (new WalletElement())
-            ->setBalance(NumFormat::parse($data['balance'], 2))
-            ->setReadyForPayout(NumFormat::parse($data['ready_for_payout'], 2))
-            ->setOnHold(NumFormat::parse($data['on_hold'], 2))
+            ->setBalance(Number::format($data['balance'], 2))
+            ->setReadyForPayout(Number::format($data['ready_for_payout'], 2))
+            ->setOnHold(Number::format($data['on_hold'], 2))
             ->setCurrency($data['currency']);
     }
 }

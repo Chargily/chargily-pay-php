@@ -5,7 +5,7 @@ namespace Chargily\ChargilyPay\Api;
 use Chargily\ChargilyPay\Core\Abstracts\ApiClassesAbstract;
 use Chargily\ChargilyPay\Core\Helpers\Carbon;
 use Chargily\ChargilyPay\Core\Helpers\Collection;
-use Chargily\ChargilyPay\Core\Helpers\NumFormat;
+use Chargily\ChargilyPay\Core\Helpers\Number;
 use Chargily\ChargilyPay\Core\Interfaces\ApiClassesInterface;
 use Chargily\ChargilyPay\Core\Traits\GuzzleHttpTrait;
 use Chargily\ChargilyPay\Elements\PaginationElement;
@@ -165,7 +165,7 @@ final class Prices extends ApiClassesAbstract implements ApiClassesInterface
         return (new PriceElement())
             ->setId($data['id'])
             ->setProductId($data['product_id'])
-            ->setAmount(NumFormat::parse($data['amount'], 2))
+            ->setAmount(Number::format($data['amount'], 2))
             ->setCurrency($data['currency'])
             ->setMetadata($data['metadata'])
             ->setCreatedAt(Carbon::parse($data['created_at']))
